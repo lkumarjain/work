@@ -214,3 +214,25 @@ func (p *Pool) log(message string) {
 		p.logFunc(message)
 	}
 }
+
+// State provides a pool state that are submitted.
+type State struct {
+	MinRoutines int           // Minumum number of routines always in the pool.
+	StatTime    time.Duration // Time to display stats.
+	Counter     int           // Maintains a running total number of routines ever created.
+	Routines    int64         // Number of routines
+	Active      int64         // Active number of routines in the work pool.
+	Pending     int64         // Pending number of routines waiting to submit work.
+}
+
+// Return worker State
+func (p *Pool) State() State {
+	return State{
+		MinRoutines: p.minRoutines,
+		StatTime:    p.statTime,
+		Counter:     p.counter,
+		Routines:    p.routines,
+		Active:      p.active,
+		Pending:     p.pending,
+	}
+}
